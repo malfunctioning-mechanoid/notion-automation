@@ -22,5 +22,5 @@ jobs:
       - name: Run Extraction Script
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
+          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID_3_2_1 }}
         run: node 3-2-1.js

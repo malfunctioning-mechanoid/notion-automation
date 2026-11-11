@@ -1,0 +1,30 @@
+name: Sync Workout Sets to Habit Tracker
+
+on:
+  schedule:
+    # Runs every 15 minutes offset by 3 minutes
+    - cron: '3/15 * * * *'
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
+
+jobs:
+  sync-workouts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24.x'
+
+      - name: Install Notion API Client
+        run: npm install @notionhq/client
+
+      - name: Run Workout Sync Script
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATA_SOURCE_ID_SET_LOG: ${{ secrets.NOTION_DATA_SOURCE_ID_SET_LOG }}
+          NOTION_DATA_SOURCE_ID_HABIT_TRACKER: ${{ secrets.NOTION_DATA_SOURCE_ID_HABIT_TRACKER }}
+        run: node sets_update.js
